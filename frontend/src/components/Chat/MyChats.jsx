@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { chatContext } from "../../context/chatContext";
 import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
 import GroupChatModel from "../miscellaneous/GroupChatModel";
@@ -13,35 +13,35 @@ const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState(user.user);
   const toast = useToast();
   
-  const fetchChats = async () => {
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
+  const fetchChats = useCallback(async ()=>{
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
 
-      const { data } = await axios.get(
-        "https://chat-app-ziwf.onrender.com/api/chats/userchat",
-        config
-      );
-      setChatsUsers(data.chats);       // storing every users in chats who started chating with logged user 
-    } catch (error) {
-      toast({
-        title: "Error Occured!",
-        description: "Failed to Load the chats",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
-      });
-    }
-  };
+        const { data } = await axios.get(
+          "https://chat-app-ziwf.onrender.com/api/chats/userchat",
+          config
+        );
+        setChatsUsers(data.chats); // storing every users in chats who started chating with logged user
+      } catch (error) {
+        toast({
+          title: "Error Occured!",
+          description: "Failed to Load the chats",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
+      }
+  },[setChatsUsers,toast,user.token])
 
   useEffect(() => {
     setLoggedUser(user.user);
     fetchChats();
-  }, [fetchAgain]);
+  }, [fetchChats,fetchAgain, user.user]);
 
   return (
     <Box

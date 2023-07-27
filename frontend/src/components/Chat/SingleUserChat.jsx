@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { chatContext } from "../../context/chatContext";
 import {
   Box,
@@ -10,7 +10,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 import { getSender, getSenderData } from "../../config/getSender";
 import ProfileModel from "../miscellaneous/ProfileModel";
 import UpdateGroupChatModal from "../miscellaneous/UpdateGroupChatModal";
@@ -21,13 +21,10 @@ import io from 'socket.io-client'
 import animationData from '../../animation/typing.json'
 import btn from '../../Images/btn2.png'
 import bgImage1 from '../../Images/bg1.png'
-import bgImage2 from '../../Images/bg2.png'
-import bgImage3 from '../../Images/bg3.png'
-import bgImage4 from '../../Images/bg4.png'
 import bgImage5 from '../../Images/mdbg.png'
 
 
-const ENDPOINT = "http://localhost:8050"
+const ENDPOINT = "https://chat-app-ziwf.onrender.com";
 var socket, selectedCompareChat; 
 
 
@@ -62,7 +59,7 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("setup", user.user);
-    socket.on("connected", () => setSocketConneted(true));
+    socket.on("connection", () => setSocketConneted(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
 
@@ -138,7 +135,7 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
 
 
   //fetching all messages
-  const fetchMessages = async() =>{
+  const fetchMessages = useCallback(async ()=>{
     try {
       if(!selectedChat) return
       setLoading(true);
@@ -161,15 +158,15 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
         isClosable: true,
       });
     }
-  }
+  },[toast,user.token,selectedChat])
 
   
 
-  useEffect(()=>{
-    fetchMessages()
-    
+  useEffect(() => {
+    fetchMessages();
+
     selectedCompareChat = selectedChat;
-  },[selectedChat])
+  }, [selectedChat, fetchMessages]);
 
  useEffect(()=>{
   socket.on("message recieved",(newMessageRecieved)=>{

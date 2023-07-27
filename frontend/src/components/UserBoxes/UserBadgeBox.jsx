@@ -1,11 +1,9 @@
 import { Badge } from '@chakra-ui/react'
-import React, { useContext } from 'react'
+import React from 'react'
 import { CloseIcon } from "@chakra-ui/icons";
-import { chatContext } from '../../context/chatContext';
+
 
 const UserBadgeBox = ({user,handleFunction}) => {
-
-  const { selectedChat } = useContext(chatContext);
 
   return (
     <Badge
