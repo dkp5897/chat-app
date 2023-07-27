@@ -34,6 +34,10 @@ const server = app.listen(process.env.PORT, () => {
   console.log(`server is running on http://localhost:${process.env.PORT}`);
 });
 
+app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+
 // ------------------------Development---------------------------------------//
 
 // const __dirname1 = path.resolve();
