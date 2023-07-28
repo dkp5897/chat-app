@@ -22,7 +22,7 @@ const MyChats = ({ fetchAgain }) => {
         };
 
         const { data } = await axios.get(
-          "https://chat-app-ziwf.onrender.com/api/chats/userchat",
+          "https://air-talk.onrender.com/api/chats/userchat",
           config
         );
         setChatsUsers(data.chats); // storing every users in chats who started chating with logged user

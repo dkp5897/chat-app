@@ -46,7 +46,7 @@ const GroupChatModel = ({ children }) => {
         },
       };
 
-      let link = `https://chat-app-ziwf.onrender.com/api/user?search=${searchUser}`;
+      let link = `https://air-talk.onrender.com/api/user?search=${searchUser}`;
 
       const { data } = await axios.get(link, config);
       setLoading(false);
@@ -103,7 +103,7 @@ const GroupChatModel = ({ children }) => {
       };
 
       const { data } = await axios.post(
-        "https://chat-app-ziwf.onrender.com/api/chats/groupChat",{
+        "https://air-talk.onrender.com/api/chats/groupChat",{
           name:groupName,
           users:JSON.stringify(selectedUsers.map(user=>user._id))
         },config

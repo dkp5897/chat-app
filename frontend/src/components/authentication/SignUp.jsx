@@ -110,7 +110,7 @@ const SignUP = () => {
        };
 
       const { data } = await axios.post(
-        "https://chat-app-ziwf.onrender.com/api/user/signUp",
+        "https://air-talk.onrender.com/api/user/signUp",
         {
           name,
           email,

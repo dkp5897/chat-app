@@ -47,7 +47,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
         },
       };
 
-      let link = `https://chat-app-ziwf.onrender.com/api/user?search=${searchUser}`;
+      let link = `https://air-talk.onrender.com/api/user?search=${searchUser}`;
 
       const { data } = await axios.get(link, config);
       setLoading(false);
@@ -85,7 +85,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       };
 
       const { data } = await axios.put(
-        "https://chat-app-ziwf.onrender.com/api/chats/rename",
+        "https://air-talk.onrender.com/api/chats/rename",
         {
           groupId: selectedChat._id,
           groupName: groupName,
@@ -127,7 +127,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       };
 
       const { data } = await axios.put(
-        "https://chat-app-ziwf.onrender.com/api/chats/removeuser",
+        "https://air-talk.onrender.com/api/chats/removeuser",
         {
           groupId: selectedChat._id,
           userId: user1._id,
@@ -186,7 +186,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       };
 
       const { data } = await axios.put(
-        "https://chat-app-ziwf.onrender.com/api/chats/adduser",
+        "https://air-talk.onrender.com/api/chats/adduser",
         {
           groupId: selectedChat._id,
           userId: newUser._id,

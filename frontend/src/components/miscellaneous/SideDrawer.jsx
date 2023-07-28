@@ -65,7 +65,7 @@ const SideDrawer = () => {
       };
 
       const { data } = await axios.post(
-        "https://chat-app-ziwf.onrender.com/api/chats/userchat",
+        "https://air-talk.onrender.com/api/chats/userchat",
         { userId },
         config
       );
@@ -105,7 +105,7 @@ const SideDrawer = () => {
         },
       };
 
-      let link = `https://chat-app-ziwf.onrender.com/api/user?search=${search}`;
+      let link = `https://air-talk.onrender.com/api/user?search=${search}`;
 
       const { data } = await axios.get(link, config);
       setLoading(false);

@@ -24,7 +24,7 @@ import bgImage1 from '../../Images/bg1.png'
 import bgImage5 from '../../Images/mdbg.png'
 
 
-const ENDPOINT = "https://chat-app-ziwf.onrender.com";
+const ENDPOINT = "https://air-talk.onrender.com";
 var socket, selectedCompareChat; 
 
 
@@ -101,7 +101,7 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
 
       setNewMessage("");
       const { data } = await axios.post(
-        "https://chat-app-ziwf.onrender.com/api/message/new",
+        "https://air-talk.onrender.com/api/message/new",
         {
           content: newMessages,
           chatId: selectedChat._id,
@@ -145,7 +145,7 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
         },
       };
 
-      const { data } = await axios.get(`https://chat-app-ziwf.onrender.com/api/message/${selectedChat._id}`,config);
+      const { data } = await axios.get(`https://air-talk.onrender.com/api/message/${selectedChat._id}`,config);
       setMessages(data)
       setLoading(false)
       socket.emit("join-chat",selectedChat._id)
