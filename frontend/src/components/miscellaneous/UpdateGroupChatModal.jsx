@@ -143,7 +143,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
     } catch (error) {
       toast({
         title: "Error Occured!",
-        status: error,
+        status: error.response.data.message,
         duration: 5000,
         isClosable: true,
         position: "bottom",
@@ -200,7 +200,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
     } catch (error) {
       toast({
         title: "Error Occured!",
-        status: error,
+        status: error.response.data.message,
         duration: 5000,
         isClosable: true,
         position: "bottom",

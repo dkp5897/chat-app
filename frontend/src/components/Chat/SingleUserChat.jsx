@@ -113,7 +113,7 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
     } catch (error) {
       toast({
         status: "error",
-        description: error,
+        description: error.response.data.message,
         duration: 5000,
         position: "bottom",
         isClosable: true,
@@ -152,7 +152,7 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
     } catch (error) {
       toast({
         status: "error",
-        description: error,
+        description: error.response.data.message,
         duration: 5000,
         position: "bottom",
         isClosable: true,

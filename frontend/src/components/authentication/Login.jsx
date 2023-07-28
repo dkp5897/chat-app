@@ -61,9 +61,10 @@ const Login = () => {
       navigate("/chat");
     } catch (error) {
       // setError(Promise.reject(error.response.data.message));
+      console.log(error.response.data.message)
       toast({
         title: "Error Occured!",
-        description: "error during login",
+        description: error.response.data.message,
         status: "error",
         duration: 5000,
         isClosable: true,
