@@ -18,6 +18,7 @@ import { chatContext } from "../../context/chatContext";
 import axios from "axios";
 import UserListBox from "../UserBoxes/UserListBox";
 import UserBadgeBox from "../UserBoxes/UserBadgeBox";
+import {config} from "../../config/config";
 
 const GroupChatModel = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -29,6 +30,7 @@ const GroupChatModel = ({ children }) => {
 
   const { user, chatsUsers, setChatsUsers } = useContext(chatContext);
   const toast = useToast();
+  const {baseURL} = config;
 
   //searching users for group addition
 
@@ -46,7 +48,7 @@ const GroupChatModel = ({ children }) => {
         },
       };
 
-      let link = `https://air-talk.onrender.com/api/user?search=${searchUser}`;
+      let link = `${baseURL}/api/user?search=${searchUser}`;
 
       const { data } = await axios.get(link, config);
       setLoading(false);
@@ -103,7 +105,7 @@ const GroupChatModel = ({ children }) => {
       };
 
       const { data } = await axios.post(
-        "https://air-talk.onrender.com/api/chats/groupChat",{
+        `${baseURL}/api/chats/groupChat`,{
           name:groupName,
           users:JSON.stringify(selectedUsers.map(user=>user._id))
         },config
