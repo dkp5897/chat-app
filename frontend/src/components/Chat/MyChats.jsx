@@ -6,12 +6,14 @@ import { AddIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import ChatLoading from "../miscellaneous/ChatLoadig";
 import { getSender } from "../../config/getSender";
+import {config} from "../../config/config";
 
 const MyChats = ({ fetchAgain }) => {
   const { selectedChat, setSelectedChat, user, chatsUsers, setChatsUsers } =
     useContext(chatContext);
   const [loggedUser, setLoggedUser] = useState(user.user);
   const toast = useToast();
+  const {baseURL} = config;
   
   const fetchChats = useCallback(async ()=>{
       try {
@@ -22,7 +24,7 @@ const MyChats = ({ fetchAgain }) => {
         };
 
         const { data } = await axios.get(
-          "https://air-talk.onrender.com/api/chats/userchat",
+          `${baseURL}/api/chats/userchat`,
           config
         );
         setChatsUsers(data.chats); // storing every users in chats who started chating with logged user
@@ -36,7 +38,7 @@ const MyChats = ({ fetchAgain }) => {
           position: "bottom-left",
         });
       }
-  },[setChatsUsers,toast,user.token])
+  },[setChatsUsers,toast,user.token, baseURL])
 
   useEffect(() => {
     setLoggedUser(user.user);

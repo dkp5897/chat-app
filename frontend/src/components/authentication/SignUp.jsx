@@ -11,6 +11,8 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {config} from "../../config/config";
+const {baseURL} = config;
 
 const SignUP = () => {
   const [show, setShow] = useState(false);
@@ -110,7 +112,7 @@ const SignUP = () => {
        };
 
       const { data } = await axios.post(
-        "https://air-talk.onrender.com/api/user/signUp",
+        `${baseURL}/api/user/signUp`,
         {
           name,
           email,

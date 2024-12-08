@@ -16,16 +16,20 @@ import ProfileModel from "../miscellaneous/ProfileModel";
 import UpdateGroupChatModal from "../miscellaneous/UpdateGroupChatModal";
 import axios from "axios";
 import MessagesBox from "../messagesBox/MessagesBox";
-import Lottie from 'react-lottie'
+import Lottie from 'react-lottie-player'
 import io from 'socket.io-client'
 import animationData from '../../animation/typing.json'
 import btn from '../../Images/btn2.png'
 import bgImage1 from '../../Images/bg1.png'
-import bgImage5 from '../../Images/mdbg.png'
+import bgImage5 from '../../Images/mdbg.png';
+import {config} from '../../config/config';
+
+const {baseURL} = config;
 
 
-const ENDPOINT = "https://air-talk.onrender.com";
-var socket, selectedCompareChat; 
+
+const ENDPOINT = `${baseURL}`;
+var socket, selectedCompareChat;
 
 
 
@@ -35,8 +39,8 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
   const [loading, setLoading] = useState(false);
   const [newMessages, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [socketConnected,setSocketConneted] = useState(false)
-  const [typing,setTyping] = useState(false)
+  const [socketConnected, setSocketConneted] = useState(false)
+  const [typing, setTyping] = useState(false)
   const [isTyping, setIsTyping] = useState(false);
 
 
@@ -70,27 +74,27 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
     setNewMessage(e.target.value);
 
     // Typing loaginc here
-    if(!socketConnected) return 
+    if (!socketConnected) return
 
-    if(!typing){
+    if (!typing) {
       setTyping(true)
-      socket.emit("typing",selectedChat._id)
+      socket.emit("typing", selectedChat._id)
     }
 
     let lastTypingTime = new Date().getTime()
     var TimeLength = 3000;
 
-    setTimeout(()=>{
+    setTimeout(() => {
       var time = new Date().getTime()
       var timeDiff = time - lastTypingTime
-      if(timeDiff>=TimeLength && typing){
+      if (timeDiff >= TimeLength && typing) {
         socket.emit("stop typing", selectedChat._id);
         setTyping(false)
       }
-    },TimeLength)
+    }, TimeLength)
   };
 
-  const sendingMessage = async () =>{
+  const sendingMessage = async () => {
     try {
       const config = {
         headers: {
@@ -101,7 +105,7 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
 
       setNewMessage("");
       const { data } = await axios.post(
-        "https://air-talk.onrender.com/api/message/new",
+        `${baseURL}/api/message/new`,
         {
           content: newMessages,
           chatId: selectedChat._id,
@@ -123,21 +127,21 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
 
   const sendMessages = async (event) => {
     if (event.key === "Enter" && newMessages) {
-      socket.emit("stop typing",selectedChat._id)
+      socket.emit("stop typing", selectedChat._id)
       sendingMessage()
     }
   };
 
-  const sendByBtn = () =>{
+  const sendByBtn = () => {
     socket.emit("stop typing", selectedChat._id);
     sendingMessage();
   }
 
 
   //fetching all messages
-  const fetchMessages = useCallback(async ()=>{
+  const fetchMessages = useCallback(async () => {
     try {
-      if(!selectedChat) return
+      if (!selectedChat) return
       setLoading(true);
       const config = {
         headers: {
@@ -145,10 +149,10 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
         },
       };
 
-      const { data } = await axios.get(`https://air-talk.onrender.com/api/message/${selectedChat._id}`,config);
+      const { data } = await axios.get(`${baseURL}/api/message/${selectedChat._id}`, config);
       setMessages(data)
       setLoading(false)
-      socket.emit("join-chat",selectedChat._id)
+      socket.emit("join-chat", selectedChat._id)
     } catch (error) {
       toast({
         status: "error",
@@ -158,9 +162,9 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
         isClosable: true,
       });
     }
-  },[toast,user.token,selectedChat])
+  }, [toast, user.token, selectedChat])
 
-  
+
 
   useEffect(() => {
     fetchMessages();
@@ -168,19 +172,19 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
     selectedCompareChat = selectedChat;
   }, [selectedChat, fetchMessages]);
 
- useEffect(()=>{
-  socket.on("message recieved",(newMessageRecieved)=>{
-    if(!selectedCompareChat || selectedCompareChat._id !== newMessageRecieved.chat._id){
-      // show notification
-      if(!notification.includes(newMessageRecieved)){
-        setNotification([newMessageRecieved,...notification])
-        setFetchAgain(!fetchAgain)
+  useEffect(() => {
+    socket.on("message recieved", (newMessageRecieved) => {
+      if (!selectedCompareChat || selectedCompareChat._id !== newMessageRecieved.chat._id) {
+        // show notification
+        if (!notification.includes(newMessageRecieved)) {
+          setNotification([newMessageRecieved, ...notification])
+          setFetchAgain(!fetchAgain)
+        }
+      } else {
+        setMessages([...messages, newMessageRecieved])
       }
-    }else{
-      setMessages([...messages,newMessageRecieved])
-    }
-  });
- })
+    });
+  })
 
   return (
     <>
@@ -232,7 +236,7 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
             height="100%"
             borderRadius="lg"
             overflowY={"hidden"}
-            // overflowY="hidden"
+          // overflowY="hidden"
           >
             {loading ? (
               <>
@@ -259,7 +263,7 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
                   style={{ margin: 10 }}
                 />
               )}
-              <Box display={"flex"}>
+              <Box display={"flex"} marginTop={4}>
                 <Input
                   variant={"filled"}
                   placeholder="Write your message here"
