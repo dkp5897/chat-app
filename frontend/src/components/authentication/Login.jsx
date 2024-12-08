@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {config} from '../../config/config';
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -21,6 +22,7 @@ const Login = () => {
 
   const toast = useToast();
   const navigate = useNavigate();
+  const {baseURL} = config;
 
   const onSubmit = async () => {
     setLoading(true);
@@ -44,7 +46,7 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        "https://air-talk.onrender.com/api/user/login",
+        `${baseURL}/api/user/login`,
         { email, password },
         config
       );

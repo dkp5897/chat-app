@@ -27,7 +27,8 @@ import axios from "axios";
 import UserListBox from "../UserBoxes/UserListBox";
 import ChatLoading from "./ChatLoadig";
 import { getSender } from "../../config/getSender";
-import NotificationBadge, { Effect } from 'react-notification-badge'
+import NotificationBadge, { Effect } from 'react-notification-badge';
+import {config} from '../../config/config'
 
 const SideDrawer = () => {
   const {
@@ -52,6 +53,7 @@ const SideDrawer = () => {
     localStorage.removeItem("userInfo");
     navigate("/");
   };
+  const {baseURL} = config;
 
   //creating or accessing chatsUsers b/w login user and the user (UserId)
   const accessChat = async (userId) => {
@@ -65,7 +67,7 @@ const SideDrawer = () => {
       };
 
       const { data } = await axios.post(
-        "https://air-talk.onrender.com/api/chats/userchat",
+        `${baseURL}/api/chats/userchat`,
         { userId },
         config
       );
@@ -105,7 +107,7 @@ const SideDrawer = () => {
         },
       };
 
-      let link = `https://air-talk.onrender.com/api/user?search=${search}`;
+      let link = `${baseURL}/api/user?search=${search}`;
 
       const { data } = await axios.get(link, config);
       setLoading(false);

@@ -21,8 +21,11 @@ import { chatContext } from "../../context/chatContext";
 import UserBadgeBox from "../UserBoxes/UserBadgeBox";
 import axios from "axios";
 import UserListBox from "../UserBoxes/UserListBox";
+import {config} from '../../config/config';
+
 
 const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
+  const {baseURL} = config;
   const [groupName, setGroupName] = useState("");
   const [searchUser, setSearchUser] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -47,7 +50,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
         },
       };
 
-      let link = `https://air-talk.onrender.com/api/user?search=${searchUser}`;
+      let link = `${baseURL}/api/user?search=${searchUser}`;
 
       const { data } = await axios.get(link, config);
       setLoading(false);
@@ -85,7 +88,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       };
 
       const { data } = await axios.put(
-        "https://air-talk.onrender.com/api/chats/rename",
+        `${baseURL}/api/chats/rename`,
         {
           groupId: selectedChat._id,
           groupName: groupName,
@@ -127,7 +130,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       };
 
       const { data } = await axios.put(
-        "https://air-talk.onrender.com/api/chats/removeuser",
+        `${baseURL}/api/chats/removeuser`,
         {
           groupId: selectedChat._id,
           userId: user1._id,
@@ -186,7 +189,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       };
 
       const { data } = await axios.put(
-        "https://air-talk.onrender.com/api/chats/adduser",
+        `${baseURL}/api/chats/adduser`,
         {
           groupId: selectedChat._id,
           userId: newUser._id,
