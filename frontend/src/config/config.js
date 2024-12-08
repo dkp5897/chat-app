@@ -1,3 +1,3 @@
 exports.config = {
-    baseURL : "https://chat-app-ziwf.onrender.com",
+    baseURL : "https://chat-app-dev-exhz.onrender.com",
 }
