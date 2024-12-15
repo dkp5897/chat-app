@@ -63,7 +63,6 @@ const Login = () => {
       navigate("/chat");
     } catch (error) {
       // setError(Promise.reject(error.response.data.message));
-      console.log(error.response.data)
       toast({
         title: "Error Occured!",
         description: error.response.data.message,
@@ -121,7 +120,7 @@ const Login = () => {
           colorScheme={"green"}
           onClick={() => {
             setEmail("guest@gmail.com");
-            setPassword("123456");
+            setPassword("guest@123");
           }}
         >
           Guest User
