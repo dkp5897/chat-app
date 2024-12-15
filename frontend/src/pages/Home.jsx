@@ -32,7 +32,7 @@ const Home = () => {
     <Box
       display={"flex"}
       alignItems={"center"}
-      // justifyContent={"space-around"}
+      margin={"auto"}
     >
       <Box
         display={{ base: "none", md: "block" }}
@@ -52,7 +52,7 @@ const Home = () => {
           borderTopRightRadius={"60px"}
           borderWidth={"medium"}
           fontSize={"xx-large"}
-          marginTop={"25%"}
+          marginTop={"10%"}
         >
           <Text
             textAlign={"center"}
