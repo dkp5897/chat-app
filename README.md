@@ -123,9 +123,9 @@ The frontend will run on `http://localhost:3000`
 ## 📡 API Endpoints
 
 ### Authentication Routes (`/api/user`)
-- `POST /api/user/signup` - Register a new user
+- `POST /api/user/signUp` - Register a new user
 - `POST /api/user/login` - User login
-- `GET /api/user/search?search=query` - Search users
+- `GET /api/user?search=query` - Search/get all users
 
 ### Chat Routes (`/api/chats`)
 - `POST /api/chats/userChat` - Create/fetch one-on-one chat
@@ -138,6 +138,41 @@ The frontend will run on `http://localhost:3000`
 ### Message Routes (`/api/message`)
 - `POST /api/message/new` - Send new message
 - `GET /api/message/:chatId` - Get all messages for a chat
+
+## 🗄️ Database Schema
+
+### User Model
+```javascript
+{
+  name: String,           // User's display name
+  email: String,          // Unique email address
+  password: String,       // Hashed password
+  pic: String,           // Profile picture URL
+  timestamps: true       // createdAt, updatedAt
+}
+```
+
+### Chat Model
+```javascript
+{
+  chatName: String,       // Chat/Group name
+  isGroupChat: Boolean,   // false for 1-on-1, true for groups
+  users: [ObjectId],      // Array of user references
+  latestMessage: ObjectId, // Reference to latest message
+  groupAdmin: ObjectId,   // Reference to group admin (for groups)
+  timestamps: true       // createdAt, updatedAt
+}
+```
+
+### Message Model
+```javascript
+{
+  sender: ObjectId,       // Reference to sender user
+  content: String,        // Message text content
+  chat: ObjectId,         // Reference to chat/group
+  timestamps: true       // createdAt, updatedAt
+}
+```
 
 ## 🔌 Socket.io Events
 
@@ -154,6 +189,44 @@ The frontend will run on `http://localhost:3000`
 - `stop typing` - Stop typing notification
 - `message received` - Receive new message
 
+## 📱 Usage
+
+### Getting Started
+1. **Register/Login**: Create a new account or login with existing credentials
+2. **Search Users**: Use the search functionality to find other users
+3. **Start Chatting**: Click on a user to start a one-on-one conversation
+4. **Create Groups**: Use the group chat feature to create group conversations
+5. **Manage Groups**: Add/remove users and rename groups (admin only)
+
+### Key Features in Action
+- **Real-time messaging**: Messages appear instantly without page refresh
+- **Typing indicators**: See "User is typing..." when someone is composing a message
+- **Online status**: See which users are currently online
+- **Message persistence**: All chat history is saved and loads when you revisit
+
+## 🔧 Development
+
+### Running in Development Mode
+
+**Backend (with auto-restart)**
+```bash
+npm run server  # Uses nodemon for auto-restart on changes
+```
+
+**Frontend (with hot reload)**
+```bash
+cd frontend
+npm start  # React development server with hot reload
+```
+
+### Building for Production
+
+**Frontend Build**
+```bash
+cd frontend
+npm run build
+```
+
 ## 🚀 Deployment
 
 ### Backend (Vercel)
@@ -169,6 +242,54 @@ The frontend is deployed on Netlify:
 - Automatic deployments from main branch
 
 **Live Demo**: [Air-Talk on Netlify](https://air-talk.netlify.app)
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Backend won't start**
+- Check if MongoDB is running and accessible
+- Verify environment variables in `.env` file
+- Ensure PORT is not already in use
+
+**Frontend can't connect to backend**
+- Verify backend server is running on correct port
+- Check CORS configuration in `server.js`
+- Ensure API endpoints match between frontend and backend
+
+**Socket.io connection issues**
+- Check network connectivity
+- Verify Socket.io server configuration
+- Ensure frontend is connecting to correct backend URL
+
+**Database connection errors**
+- Verify MongoDB connection string
+- Check database permissions
+- Ensure MongoDB service is running
+
+## 📦 Dependencies
+
+### Backend Dependencies
+- `express` - Web application framework
+- `mongoose` - MongoDB ODM
+- `socket.io` - Real-time communication
+- `jsonwebtoken` - JWT authentication
+- `bcryptjs` - Password hashing
+- `dotenv` - Environment variables
+- `express-async-handler` - Async error handling
+- `body-parser` - Request body parsing
+
+### Frontend Dependencies
+- `react` & `react-dom` - React library
+- `@chakra-ui/react` - UI component library
+- `@chakra-ui/icons` - Icon components
+- `socket.io-client` - Socket.io client
+- `react-router-dom` - Routing
+- `axios` - HTTP client
+- `framer-motion` - Animation library
+- `react-lottie-player` - Lottie animations
+- `react-notification-badge` - Notification badges
+- `react-scrollable-feed` - Auto-scrolling feed
 
 ## 🤝 Contributing
 
