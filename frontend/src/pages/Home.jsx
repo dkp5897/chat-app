@@ -30,66 +30,100 @@ const Home = () => {
 
   return (
     <Box
-      display={"flex"}
-      alignItems={"center"}
-      // justifyContent={"space-around"}
+      minHeight="100vh"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      bg="linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)"
+      p={4}
     >
       <Box
-        display={{ base: "none", md: "block" }}
-        bgGradient={homeGif}
-        width={"50%"}
-        height={"40vh"}
-        marginLeft={25}
-      ></Box>
-
-      <Container maxW={"2xl"} centerContent>
+        display={{ base: "none", lg: "block" }}
+        width="50%"
+        height="60vh"
+        bgImage={`url(${homeGif})`}
+        bgSize="contain"
+        bgRepeat="no-repeat"
+        bgPosition="center"
+        mr={8}
+      />
+      
+      <Container maxW="lg" centerContent>
         <Box
-          display={"flex"}
-          justifyContent={"center"}
-          width={"100%"}
-          borderBottom={"none"}
-          borderTopLeftRadius={"60px"}
-          borderTopRightRadius={"60px"}
-          borderWidth={"medium"}
-          fontSize={"xx-large"}
-          marginTop={"25%"}
+          bg="white"
+          borderRadius="2xl"
+          boxShadow="2xl"
+          overflow="hidden"
+          border="1px solid"
+          borderColor="gray.200"
+          width="100%"
+          className="fade-in"
         >
-          <Text
-            textAlign={"center"}
-            fontSize={50}
-            fontWeight={"bold"}
-            textShadow={"2px 2px 4px "}
-            color={"blue.400"}
-            letterSpacing={3}
-            textDecor={"underline"}
+          {/* Header */}
+          <Box
+            bg="linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)"
+            py={8}
+            px={6}
+            textAlign="center"
           >
-            AirTalk
-          </Text>
-        </Box>
+            <Text
+              fontSize="4xl"
+              fontWeight="800"
+              color="white"
+              letterSpacing="tight"
+              fontFamily="Inter"
+              mb={2}
+            >
+              AirTalk
+            </Text>
+            <Text
+              color="blue.100"
+              fontSize="lg"
+              fontWeight="400"
+            >
+              Connect with friends instantly
+            </Text>
+          </Box>
 
-        <Box
-          w={"100%"}
-          bgColor={"rgb(253,253,253)"}
-          p={4}
-          borderBottomRightRadius={"60px"}
-          borderBottomLeftRadius={"60px"}
-          borderWidth={"medium"}
-          borderTop={"none"}
-        >
-          <Tabs variant="soft-rounded" colorScheme="blue">
-            <TabList mb={"2rem"}>
-              <Tab w={"50%"}>Login</Tab>
-              <Tab w={"50%"}>Sign Up</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <Login />
-              </TabPanel>
-              <TabPanel>
-                <SignUp />
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+          {/* Form Section */}
+          <Box p={8}>
+            <Tabs variant="soft-rounded" colorScheme="blue">
+              <TabList mb={6} bg="gray.100" borderRadius="xl" p={1}>
+                <Tab 
+                  w="50%" 
+                  borderRadius="lg"
+                  fontWeight="600"
+                  _selected={{
+                    bg: "blue.500",
+                    color: "white",
+                    boxShadow: "md"
+                  }}
+                >
+                  Login
+                </Tab>
+                <Tab 
+                  w="50%" 
+                  borderRadius="lg"
+                  fontWeight="600"
+                  _selected={{
+                    bg: "blue.500",
+                    color: "white",
+                    boxShadow: "md"
+                  }}
+                >
+                  Sign Up
+                </Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel p={0}>
+                  <Login />
+                </TabPanel>
+                <TabPanel p={0}>
+                  <SignUp />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </Box>
         </Box>
       </Container>
     </Box>

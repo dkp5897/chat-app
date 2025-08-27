@@ -9,6 +9,7 @@ import {
   Spinner,
   Text,
   useToast,
+  Avatar,
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { getSender, getSenderData } from "../../config/getSender";
@@ -190,117 +191,199 @@ const SingleUserChat = ({ fetchAgain, setFetchAgain }) => {
     <>
       {selectedChat ? (
         <>
-          <Text
-            fontSize={{ base: "28px", md: "30px" }}
-            pb={3}
-            px={2}
-            width="100%"
-            fontFamily="Work sans"
+          {/* Modern Chat Header */}
+          <Box
             display="flex"
-            justifyContent={{ base: "space-between" }}
+            justifyContent="space-between"
             alignItems="center"
+            width="100%"
+            px={6}
+            py={4}
+            borderBottom="1px solid"
+            borderColor="gray.200"
+            bg="white"
           >
-            <IconButton
-              display={{ base: "flex", md: "none" }}
-              icon={<ArrowBackIcon />}
-              onClick={() => setSelectedChat("")}
-            />
-            {!selectedChat.isGroupChat ? (
-              <>
-                {getSender(user.user, selectedChat.users)}
+            <Box display="flex" alignItems="center" gap={3}>
+              <IconButton
+                display={{ base: "flex", md: "none" }}
+                icon={<ArrowBackIcon />}
+                onClick={() => setSelectedChat("")}
+                variant="ghost"
+                size="sm"
+                borderRadius="lg"
+              />
+              <Avatar
+                size="md"
+                name={!selectedChat.isGroupChat 
+                  ? getSender(user.user, selectedChat.users) 
+                  : selectedChat.chatName
+                }
+                src={!selectedChat.isGroupChat 
+                  ? getSenderData(user.user, selectedChat.users)?.pic 
+                  : undefined
+                }
+                bg="blue.400"
+                color="white"
+              />
+              <Box>
+                <Text
+                  fontSize="lg"
+                  fontWeight="600"
+                  color="gray.800"
+                  fontFamily="Inter"
+                >
+                  {!selectedChat.isGroupChat
+                    ? getSender(user.user, selectedChat.users)
+                    : selectedChat.chatName}
+                </Text>
+                <Text fontSize="sm" color="gray.500">
+                  {!selectedChat.isGroupChat ? "Online" : `${selectedChat.users.length} members`}
+                </Text>
+              </Box>
+            </Box>
+            
+            <Box>
+              {!selectedChat.isGroupChat ? (
                 <ProfileModel
                   user={getSenderData(user.user, selectedChat.users)}
                 />
-              </>
-            ) : (
-              //getsender method return the name of user
-              <>
-                {selectedChat.chatName.toUpperCase()}
+              ) : (
                 <UpdateGroupChatModal
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
                 />
-              </>
-            )}
-          </Text>
+              )}
+            </Box>
+          </Box>
+          
+          {/* Messages Area */}
           <Box
             display="flex"
             flexDir="column"
             justifyContent="flex-end"
-            padding={3}
-            // bg="#E8E8E8"
-            // objectFit={"cover"}
-            backgroundSize={"cover"}
-            bgGradient={{ base: bgImage1, md: bgImage5 }}
             width="100%"
-            height="100%"
-            borderRadius="lg"
-            overflowY={"hidden"}
-          // overflowY="hidden"
+            height="calc(100% - 140px)"
+            bg="gray.50"
+            position="relative"
+            overflow="hidden"
           >
             {loading ? (
-              <>
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                height="100%"
+              >
                 <Spinner
                   size="xl"
-                  width={20}
-                  height={20}
-                  alignSelf="center"
-                  margin="auto"
+                  color="blue.500"
+                  thickness="3px"
                 />
-              </>
+              </Box>
             ) : (
-              <div className="messages">
+              <Box className="messages" flex="1" overflowY="auto">
                 <MessagesBox messages={messages} />
-              </div>
+              </Box>
             )}
 
-            <FormControl onKeyDown={sendMessages}>
-              {isTyping && (
+            {/* Typing Indicator */}
+            {isTyping && (
+              <Box px={4} py={2}>
                 <Lottie
                   options={defaultOptions}
-                  width={70}
-                  height={35}
-                  style={{ margin: 10 }}
+                  width={60}
+                  height={30}
+                  style={{ margin: 0 }}
                 />
-              )}
-              <Box display={"flex"} marginTop={4}>
+              </Box>
+            )}
+          </Box>
+          
+          {/* Modern Message Input */}
+          <Box
+            px={6}
+            py={4}
+            borderTop="1px solid"
+            borderColor="gray.200"
+            bg="white"
+          >
+            <FormControl onKeyDown={sendMessages}>
+              <Box display="flex" alignItems="center" gap={2}>
                 <Input
-                  variant={"filled"}
-                  placeholder="Write your message here"
-                  // bgColor={""}
+                  placeholder="Type a message..."
                   onChange={onChangeHandler}
-                  color={{ base: "blue", md: "white" }}
                   value={newMessages}
-                  borderTopRightRadius={0}
-                  borderBottomRightRadius={0}
+                  border="1px solid"
+                  borderColor="gray.300"
+                  borderRadius="full"
+                  px={4}
+                  py={3}
+                  fontSize="sm"
+                  bg="gray.50"
+                  _focus={{
+                    borderColor: "blue.500",
+                    bg: "white",
+                    boxShadow: "0 0 0 3px rgb(14 165 233 / 0.1)"
+                  }}
+                  _placeholder={{ color: "gray.500" }}
                 />
                 <IconButton
-                  width={15}
-                  height={10}
-                  borderBottomRightRadius={10}
-                  borderTopRightRadius={10}
+                  icon={
+                    <Image
+                      src={btn}
+                      alt="Send"
+                      width="20px"
+                      height="20px"
+                    />
+                  }
                   onClick={sendByBtn}
-                >
-                  <Image
-                    src={btn}
-                    borderBottomRightRadius={10}
-                    borderTopRightRadius={10}
-                  />
-                </IconButton>
+                  bg="blue.500"
+                  color="white"
+                  borderRadius="full"
+                  size="md"
+                  _hover={{
+                    bg: "blue.600",
+                    transform: "scale(1.05)",
+                  }}
+                  _active={{
+                    transform: "scale(0.95)",
+                  }}
+                  transition="all 0.2s"
+                />
               </Box>
             </FormControl>
           </Box>
         </>
       ) : (
         <Box
-          display={"flex"}
-          justifyContent={"center"}
-          height={"100%"}
-          alignItems={"center"}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100%"
+          flexDirection="column"
+          gap={4}
+          bg="gray.50"
         >
-          <Text fontSize={"3xl"} fontFamily={"Work sans"} pb={3} color="green">
-            Select an user to chat
-          </Text>
+          <Box
+            p={8}
+            borderRadius="2xl"
+            bg="white"
+            boxShadow="lg"
+            textAlign="center"
+          >
+            <Text
+              fontSize="2xl"
+              fontWeight="600"
+              color="gray.600"
+              mb={2}
+              fontFamily="Inter"
+            >
+              Welcome to AirTalk
+            </Text>
+            <Text fontSize="md" color="gray.500">
+              Select a chat to start messaging
+            </Text>
+          </Box>
         </Box>
       )}
     </>

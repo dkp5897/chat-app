@@ -15,14 +15,21 @@ const Chat = () => {
     navigate("/");
   }
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ 
+      width: "100%", 
+      minHeight: "100vh",
+      background: "linear-gradient(135deg, #f0f9ff 0%, #f8fafc 100%)"
+    }}>
       {user && <SideDrawer />}
       <Box
         display="flex"
         justifyContent="space-between"
         width="100%"
-        height="91.5vh"
-        padding="10px"
+        height="calc(100vh - 80px)"
+        padding="1rem"
+        gap="1rem"
+        maxWidth="1400px"
+        margin="0 auto"
       >
         {user && <MyChats fetchAgain={fetchAgain} />}
         {user && <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />}
