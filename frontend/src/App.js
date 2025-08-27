@@ -3,12 +3,14 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
+import ModernChatDemo from "./components/demo/ModernChatDemo";
 
 function App() {
   return (
     <div className="app">
       <Routes>
         <Route path="/" Component={Home} />
+        <Route path="/demo" Component={ModernChatDemo} />
         <Route
           path="/chat"
           element={
