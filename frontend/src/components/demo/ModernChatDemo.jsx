@@ -5,12 +5,11 @@ import {
   Avatar,
   IconButton,
   Input,
-  Image,
   Stack,
   Button,
   Flex,
 } from '@chakra-ui/react';
-import { ArrowBackIcon, AddIcon, SearchIcon, BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { AddIcon, SearchIcon, BellIcon } from '@chakra-ui/icons';
 
 // Demo component to showcase the modern chat UI
 const ModernChatDemo = () => {

@@ -21,8 +21,6 @@ import Lottie from 'react-lottie-player'
 import io from 'socket.io-client'
 import animationData from '../../animation/typing.json'
 import btn from '../../Images/btn2.png'
-import bgImage1 from '../../Images/bg1.png'
-import bgImage5 from '../../Images/mdbg.png';
 import {config} from '../../config/config';
 
 const {baseURL} = config;
