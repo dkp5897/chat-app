@@ -4,8 +4,11 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@chakra-ui/avatar": "^2.3.0",
     "@chakra-ui/icons": "^2.1.0",
+    "@chakra-ui/layout": "^2.3.1",
     "@chakra-ui/react": "^2.7.1",
+    "@chakra-ui/skeleton": "^2.1.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@testing-library/jest-dom": "^5.16.5",

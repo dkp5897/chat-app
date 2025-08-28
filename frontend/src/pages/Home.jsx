@@ -37,17 +37,6 @@ const Home = () => {
       bg="linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)"
       p={4}
     >
-      <Box
-        display={{ base: "none", lg: "block" }}
-        width="50%"
-        height="60vh"
-        bgImage={`url(${homeGif})`}
-        bgSize="contain"
-        bgRepeat="no-repeat"
-        bgPosition="center"
-        mr={8}
-      />
-      
       <Container maxW="lg" centerContent>
         <Box
           bg="white"
