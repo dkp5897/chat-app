@@ -12,7 +12,6 @@ import {
 import Login from "../components/authentication/Login";
 import SignUp from "../components/authentication/SignUp";
 import { useNavigate } from "react-router-dom";
-import homeGif from "../Images/live chat.gif";
 
 const Home = () => {
   const navigate = useNavigate();

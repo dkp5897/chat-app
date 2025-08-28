@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import ScrollableFeed from "react-scrollable-feed";
-import { backGroundColor, isLastMessage, isSameSender, isSameSenderMargin, isSameUser } from "../../config/getSender";
+import { isLastMessage, isSameSender, isSameUser } from "../../config/getSender";
 import { chatContext } from "../../context/chatContext";
 import { Avatar, Tooltip, Box, Text } from "@chakra-ui/react";
 
